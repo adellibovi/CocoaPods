@@ -71,6 +71,7 @@ module Pod
       @lockfile = lockfile
 
       @use_default_plugins = true
+      @repo_update = true
     end
 
     # @return [Hash, Boolean, nil] Pods that have been requested to be

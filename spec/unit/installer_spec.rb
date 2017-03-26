@@ -116,6 +116,7 @@ module Pod
         def @installer.analyze(*)
           @hook_called.should.be.true
         end
+        @installer.repo_update = false
         @installer.install!
       end
 
@@ -394,14 +395,14 @@ module Pod
 
     describe 'Dependencies Resolution' do
       describe 'updating spec repos' do
-        it 'does not updates the repositories by default' do
-          config.sources_manager.expects(:update).never
+        it 'updates the repositories by default' do
+          config.sources_manager.expects(:update).once
           @installer.send(:resolve_dependencies)
         end
 
-        it 'updates the repositories if that was requested' do
-          @installer.repo_update = true
-          config.sources_manager.expects(:update).once
+        it 'skips repositories update' do
+          @installer.repo_update = false
+          config.sources_manager.expects(:update).never
           @installer.send(:resolve_dependencies)
         end
       end

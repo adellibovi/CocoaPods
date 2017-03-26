@@ -405,6 +405,7 @@ module Pod
       sandbox = Sandbox.new(config.sandbox_root)
       @installer = Installer.new(sandbox, podfile)
       @installer.use_default_plugins = false
+      @installer.repo_update = !spec.dependency.empty?
       %i(prepare resolve_dependencies download_dependencies).each { |m| @installer.send(m) }
       @file_accessor = @installer.pod_targets.flat_map(&:file_accessors).find { |fa| fa.spec.name == consumer.spec.name }
     end
